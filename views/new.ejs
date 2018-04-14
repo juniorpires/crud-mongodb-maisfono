@@ -2,16 +2,43 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <form action="<%= action %>" method="POST">
-      <p>Nome:<input type="text" name="nome"  value="<%= doc.nome %>"/></p>
-      <p>Telefone:<input type="text" name="telefone"  value="<%= doc.telefone %>"/></p>
-      <p>Data de nascimento:<input type="date" name="data_nascimento"  value="<%= doc.data_nascimento %>"/></p>
-      <p>Deficiências:<textarea name="deficiencias"><%= doc.deficiencias %></textarea></p>
-      <input type="submit" value="Salvar" />
-    </form>
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+        <h1><%= title %></h1>
+        <form action="<%= action %>" method="POST" >
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Nome</label>
+            <input type="text" name="nome"  value="<%= doc.nome %>" class="form-control" >
+          </div>
+        
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Telefone</label>
+            <input type="text" name="telefone"  value="<%= doc.telefone %>" class="form-control">
+          </div>
+        
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Data de nascimento:</label>
+            <input type="date" name="data_nascimento"  value="<%= doc.data_nascimento %>" class="form-control" >
+          </div>
+          
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Deficiências</label>
+            <textarea class="form-control" rows="3"name="deficiencias"><%= doc.deficiencias %></textarea>
+          </div>
+        
+          <input class="btn btn-primary btn-lg btn-block" type="submit" value="Salvar" />
+          <br>
+          <a href="/"><button type="button" class="btn btn-secondary btn-lg btn-block">Voltar para lista</button></a>
+        </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
+
+
