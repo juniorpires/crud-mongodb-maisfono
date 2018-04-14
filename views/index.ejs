@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <ul>
+      <% docs.forEach(function(paciente){ %>
+        <li>
+          <a href="/edit/<%= paciente._id %>">
+            <%= paciente.nome %>
+          </a>
+          <a href="/delete/<%= paciente._id %>" 
+            onclick="return confirm('Tem certeza que deseja excluir?');">
+            X
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+
+    <hr />
+<a href="/new">Cadastrar novo paciente</a>
+  </body>
+</html>

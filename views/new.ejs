@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="<%= action %>" method="POST">
+      <p>Nome:<input type="text" name="nome"  value="<%= doc.nome %>"/></p>
+      <p>Telefone:<input type="text" name="telefone"  value="<%= doc.telefone %>"/></p>
+      <p>Data de nascimento:<input type="date" name="data_nascimento"  value="<%= doc.data_nascimento %>"/></p>
+      <p>Deficiências:<textarea name="deficiencias"><%= doc.deficiencias %></textarea></p>
+      <input type="submit" value="Salvar" />
+    </form>
+  </body>
+</html>
