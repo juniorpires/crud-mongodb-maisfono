@@ -9,6 +9,7 @@ router.get('/', function(req, res) {
 })
 });
 
+// CRUD PACIENTE
 router.get('/lista-pacientes', function(req, res, next) {
   global.db.findAll((e, docs) => {
     if(e) { return console.log(e); }
@@ -69,5 +70,64 @@ router.get('/delete/:id', function(req, res) {
       });
 });
 
+// CRUD FONO
+
+router.get('/lista-fono', function(req, res, next) {
+  global.db.findAllFono((e, docs) => {
+    if(e) { return console.log(e); }
+    res.render('lista-fono', { title: 'Listar Fonoaudiologos', docs: docs });
+})
+});
+
+router.get('/new-fono', function(req, res, next) {
+  res.render('new-fono', { title: 'Novo Cadastro de Fonoaudiologo', doc: 
+  {"nome":"",
+  "telefone":"",
+  "CRF":"",
+  "formacao":[]}, action: '/new-fono' });
+});
+
+router.post('/new-fono', function(req, res) {
+  var nome = req.body.nome;
+  var telefone = req.body.telefone;
+  var CRF = req.body.CRF;
+  var formacao = req.body.formacao.split(",");
+  global.db.insertFono({nome, telefone,CRF,formacao}, (err, result) => {
+          if(err) { return console.log(err); }
+          res.redirect('/lista-fono');
+      })
+})
+
+router.get('/new-fono/edit/:id', function(req, res, next) {
+  var id = req.params.id;
+  global.db.findOneFono(id, (e, docs) => {
+      if(e) { return console.log(e); }
+      docs[0].formacao = docs[0].formacao.join();
+      console.log(docs[0].formacao);
+      res.render('new-fono', { title: 'Edição de paciente', doc: docs[0], action: '/edit/' + docs[0]._id });
+    });
+})
+
+
+router.post('/new-fono/edit/:id', function(req, res) {
+  var id = req.params.id;
+  var nome = req.body.nome;
+  var telefone = req.body.telefone;
+  var CRF = req.body.CRF;
+  var formacao = req.body.formacao.split(",");
+  global.db.updateFono(id,{ $set:{nome, telefone,CRF,formacao}}, (e, result) => {
+        if(e) { return console.log(e); }
+        res.redirect('/lista-fono');
+    });
+});
+
+
+router.get('/new-fono/delete/:id', function(req, res) {
+  var id = req.params.id;
+  global.db.deleteOneFono(id, (e, r) => {
+        if(e) { return console.log(e); }
+        res.redirect('/lista-fono');
+      });
+});
 
 module.exports = router;
