@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+          <h1><%= title %></h1>
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  
+                  <th scope="col">Nome</th>
+                  <th scope="col">Telefone</th>
+                  <th scope="col">Data de Nascimento</th>
+                  <th scope="col">Deficiencias</th>
+                  <th scope="col">Editar</th>
+                  <th scope="col">Deletar</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% docs.forEach(function(paciente){ %>
+                <tr>      
+                  <td><%= paciente.nome %></td>
+                  <td><%= paciente.telefone %></td>
+                  <td><%= paciente.data_nascimento %></td>
+                  <td><%= paciente.deficiencias %></td>
+                  <td> <a href="/edit/<%= paciente._id %>"><button type="button" class="btn btn-info">E</button> </a></td>
+                  <td><a href="/delete/<%= paciente._id %>" 
+                    onclick="return confirm('Tem certeza que deseja excluir?');"> <button type="button" class="btn btn-danger"> X </button> </a></td>
+                
+                </tr>
+              <% }) %>
+                
+              </tbody>
+            </table>
+          
+            <a href="/new-paciente"><button type="button" class="btn btn-primary btn-lg btn-block">Cadastrar novo paciente</button></a>
+            <br>
+            <a href="/"><button type="button" class="btn btn-secondary btn-lg btn-block">Voltar para inicio</button></a>
+        </div>
+      </div>
+    </div>    
+  </body>
+</html>
+
+
