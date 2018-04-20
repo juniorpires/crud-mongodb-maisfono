@@ -130,4 +130,103 @@ router.get('/new-fono/delete/:id', function(req, res) {
       });
 });
 
+
+// CRUD AGENDA
+var statusList = ['Agendada','Realizada','Cancelada'];
+
+router.get('/lista-agenda', function(req, res, next) {
+  global.db.findAllAgenda((e, docs) => {
+    if(e) { return console.log(e); }
+    res.render('lista-agenda', { title: 'Listar Agenda', docs: docs });
+})
+});
+
+router.get('/new-agenda', function(req, res, next) {
+
+  var pacientes = [];
+  var fonos = [];
+
+  global.db.findAllFono((e, models) => {
+    if(e) { return console.log(e); }
+        fonos = models;
+        global.db.findAll((e, docs) => {
+          if(e) { return console.log(e); }
+          pacientes = docs;
+
+          res.render('new-agenda', { title: 'Agenda: novo cadastro',
+          statusList: statusList,
+          fonos: fonos,
+          pacientes: pacientes,
+          doc: 
+          {"data":"",
+          "id_fono":"",
+          "id_paciente":"",
+          "status":""}, action: '/new-agenda' });
+});
+
+  });
+ 
+});
+
+router.post('/new-agenda', function(req, res) {
+  var data = new Date(req.body.data);
+  var id_fono = req.body.id_fono;
+  var id_paciente = req.body.id_paciente;
+  var status = req.body.status;
+  global.db.insertAgenda({data, id_fono,id_paciente,status}, (err, result) => {
+          if(err) { return console.log(err); }
+          res.redirect('/lista-agenda');
+      })
+})
+
+router.get('/new-agenda/edit/:id', function(req, res, next) {
+  var pacientes = [];
+  var fonos = [];
+
+  global.db.findAllFono((e, models) => {
+  if(e) { return console.log(e); }
+  fonos = models;
+  global.db.findAll((e, docs) => {
+    if(e) { return console.log(e); }
+    pacientes = docs;
+    
+  var id = req.params.id;
+  global.db.findOneAgenda(id, (e, docs) => {
+      if(e) { return console.log(e); }
+      res.render('new-agenda', { title: 'Edição da Agenda',
+      fonos: fonos,
+      statusList: statusList,
+      pacientes: pacientes,
+      doc: docs[0],
+      action: '/new-agenda/edit/' + docs[0]._id });
+    });
+
+  });
+});
+
+    
+});
+
+
+router.post('/new-agenda/edit/:id', function(req, res) {
+  var id = req.params.id;
+  var data = new Date(req.body.data);
+  var id_fono = req.body.id_fono;
+  var id_paciente = req.body.id_paciente;
+  var status = req.body.status;
+  global.db.updateAgenda(id,{ $set:{data, id_fono,id_paciente,status}}, (e, result) => {
+        if(e) { return console.log(e); }
+        res.redirect('/lista-agenda');
+    });
+});
+
+
+router.get('/new-agenda/delete/:id', function(req, res) {
+  var id = req.params.id;
+  global.db.deleteOneAgenda(id, (e, r) => {
+        if(e) { return console.log(e); }
+        res.redirect('/lista-agenda');
+      });
+});
+
 module.exports = router;
