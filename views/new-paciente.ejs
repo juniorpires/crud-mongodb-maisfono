@@ -30,6 +30,14 @@
             <label for="exampleFormControlTextarea1">Deficiências</label>
             <textarea class="form-control" rows="3"name="deficiencias"><%= doc.deficiencias %></textarea>
           </div>
+
+          <h5>Endereço</h5>
+          <%= doc.endereco.cep %>
+
+          <script>console.log(doc);</script>
+          
+          
+
         
           <input class="btn btn-primary btn-lg btn-block" type="submit" value="Salvar" />
           <br>
