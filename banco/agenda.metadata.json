@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"fono.agenda"}],"uuid":"9a0f84f2bfb94d90a70c11a7a071b27c"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"banco.agenda"}],"uuid":"dc91b1930a2f4d3581cbbd0be20b545c"}
