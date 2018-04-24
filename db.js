@@ -54,20 +54,6 @@ function findAllAgenda(callback){
     global.conn.collection("agenda").find({}).toArray(callback);
 }
 
-function findAllAgendaJoin(callback){
-    global.conn.collection("agenda").aggregate([
-        {
-          $lookup:
-            {
-              from: "paciente",
-              localField: "id_paciente",
-              foreignField: "_id",
-              as: "paciente_fk"
-            }
-       }
-     ])
-}
-
 function insertAgenda(agenda, callback){
    global.conn.collection("agenda").insert(agenda, callback);
 }
@@ -85,7 +71,33 @@ function deleteOneAgenda(id, callback){
     global.conn.collection("agenda").deleteOne({_id: new ObjectId(id)}, callback);
 }
 
+
+//CRUD evolucao
+
+function findAllEvolucao(callback){  
+    global.conn.collection("evolucao").find({}).toArray(callback);
+}
+
+function insertEvolucao(evolucao, callback){
+   global.conn.collection("evolucao").insert(evolucao, callback);
+}
+
+var ObjectId = require("mongodb").ObjectId;
+function findOneEvolucao(id, callback){  
+    global.conn.collection("evolucao").find(new ObjectId(id)).toArray(callback);
+}
+
+function updateEvolucao(id,evolucao, callback){
+    global.conn.collection("evolucao").updateOne({_id:new ObjectId(id)},evolucao, callback);
+}
+
+function deleteOneEvolucao(id, callback){
+    global.conn.collection("evolucao").deleteOne({_id: new ObjectId(id)}, callback);
+}
+
+
 module.exports = { findAll,insert, findOne, update, deleteOne, 
                    findAllFono, insertFono, findOneFono, updateFono, deleteOneFono,
-                   findAllAgenda,findAllAgendaJoin, insertAgenda, findOneAgenda, updateAgenda, deleteOneAgenda
+                   findAllAgenda, insertAgenda, findOneAgenda, updateAgenda, deleteOneAgenda,
+                   findAllEvolucao, insertEvolucao, findOneEvolucao, updateEvolucao, deleteOneEvolucao
 }

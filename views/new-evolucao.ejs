@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+        <h1><%= title %></h1>
+        <form action="<%= action %>" method="POST" >
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Descrição</label>
+            <textarea class="form-control" rows="3"name="descricao"><%= doc.descricao %></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Data</label>
+            <input type="date" name="data"  value="<%= doc.data %>" class="form-control" >
+          </div>
+        
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Fonoaudiologo:</label>
+            <select id="id_fono" name="id_fono">
+
+                <%
+                
+                for ( var i = 0; i < fonos.length; i++ )
+                {
+                    var selected = ( doc.id_fono == fonos[ i ]._id ) ? "selected" : "";
+                    %>
+                    <option value="<%=fonos[ i ]._id %>" <%=selected %>>
+                      <%=fonos[i].nome %>
+                    </option>
+                    <%
+                }
+                %>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Paciente:</label>
+            <select id="id_paciente" name="id_paciente">
+
+                <%
+                
+                for ( var i = 0; i < pacientes.length; i++ )
+                {
+                    var selected = ( doc.id_paciente == pacientes[ i ]._id ) ? "selected" : "";
+                    %>
+                    <option value="<%=pacientes[ i ]._id %>" <%=selected %>>
+                      <%=pacientes[i].nome %>
+                    </option>
+                    <%
+                }
+                %>
+            </select>
+          </div>
+
+          <input class="btn btn-primary btn-lg btn-block" type="submit" value="Salvar" />
+          <br>
+          <a href="/lista-evolucao"><button type="button" class="btn btn-secondary btn-lg btn-block">Voltar para lista</button></a>
+          
+        </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+

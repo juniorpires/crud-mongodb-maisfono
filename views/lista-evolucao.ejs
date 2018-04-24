@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+          <h1><%= title %></h1>
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Fonoaudiologo</th>
+                  <th scope="col">Paciente</th>
+                  <th scope="col">Editar</th>
+                  <th scope="col">Deletar</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% docs.forEach(function(evolucao){ %>
+                <tr>      
+                  <td><%= evolucao.descricao %></td>
+                  <td><%= new Date(evolucao.data).toLocaleDateString("en-US") %></td>
+                  <td><%= evolucao.id_fono %></td>
+                  <td><%= evolucao.id_paciente %></td>
+                  <td> <a href="/new-evolucao/edit/<%= evolucao._id %>"><button type="button" class="btn btn-info">E</button> </a></td>
+                  <td><a href="/new-evolucao/delete/<%= evolucao._id %>" 
+                    onclick="return confirm('Tem certeza que deseja excluir?');"> <button type="button" class="btn btn-danger"> X </button> </a></td>
+                
+                </tr>
+              <% }) %>
+                
+              </tbody>
+            </table>
+          
+            <a href="/new-evolucao"><button type="button" class="btn btn-primary btn-lg btn-block">Cadastrar</button></a>
+            <br>
+            <a href="/"><button type="button" class="btn btn-secondary btn-lg btn-block">Voltar para inicio</button></a>
+        </div>
+      </div>
+    </div>    
+  </body>
+</html>
+
+

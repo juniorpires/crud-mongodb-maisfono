@@ -229,4 +229,108 @@ router.get('/new-agenda/delete/:id', function(req, res) {
       });
 });
 
+
+
+
+// CRUD Evolucao
+
+router.get('/lista-evolucao', function(req, res, next) {
+  global.db.findAllEvolucao((e, docs) => {
+    if(e) { return console.log(e); }
+    res.render('lista-evolucao', { title: 'Listar Evolucao', docs: docs });
+})
+});
+
+router.get('/new-evolucao', function(req, res, next) {
+
+  var pacientes = [];
+  var fonos = [];
+
+  global.db.findAllFono((e, models) => {
+    if(e) { return console.log(e); }
+        fonos = models;
+        global.db.findAll((e, docs) => {
+          if(e) { return console.log(e); }
+          pacientes = docs;
+
+          res.render('new-evolucao', { title: 'Evolução: novo cadastro',
+          statusList: statusList,
+          fonos: fonos,
+          pacientes: pacientes,
+          doc: 
+          {
+          "descricao":"",
+          "data":"",
+          "id_fono":"",
+          "id_paciente":"",
+          }, action: '/new-evolucao' });
+});
+
+  });
+ 
+});
+
+router.post('/new-evolucao', function(req, res) {
+  var descricao = req.body.descricao;
+  var data = new Date(req.body.data);
+  var id_fono = req.body.id_fono;
+  var id_paciente = req.body.id_paciente;
+  var status = req.body.status;
+  global.db.insertEvolucao({descricao,data, id_fono,id_paciente}, (err, result) => {
+          if(err) { return console.log(err); }
+          res.redirect('/lista-evolucao');
+      })
+})
+
+router.get('/new-evolucao/edit/:id', function(req, res, next) {
+  var pacientes = [];
+  var fonos = [];
+
+  global.db.findAllFono((e, models) => {
+  if(e) { return console.log(e); }
+  fonos = models;
+  global.db.findAll((e, docs) => {
+    if(e) { return console.log(e); }
+    pacientes = docs;
+    
+  var id = req.params.id;
+  global.db.findOneEvolucao(id, (e, docs) => {
+      if(e) { return console.log(e); }
+      res.render('new-evolucao', { title: 'Edição da Evolução',
+      fonos: fonos,
+      statusList: statusList,
+      pacientes: pacientes,
+      doc: docs[0],
+      action: '/new-evolucao/edit/' + docs[0]._id });
+    });
+
+  });
+});
+
+    
+});
+
+
+router.post('/new-evolucao/edit/:id', function(req, res) {
+  var id = req.params.id;
+  var descricao = req.body.descricao;
+  var data = new Date(req.body.data);
+  var id_fono = req.body.id_fono;
+  var id_paciente = req.body.id_paciente;
+  var status = req.body.status;
+  global.db.updateEvolucao(id,{ $set:{descricao,data, id_fono,id_paciente}}, (e, result) => {
+        if(e) { return console.log(e); }
+        res.redirect('/lista-evolucao');
+    });
+});
+
+
+router.get('/new-evolucao/delete/:id', function(req, res) {
+  var id = req.params.id;
+  global.db.deleteOneEvolucao(id, (e, r) => {
+        if(e) { return console.log(e); }
+        res.redirect('/lista-evolucao');
+      });
+});
+
 module.exports = router;
