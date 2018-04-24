@@ -1,6 +1,6 @@
 var mongoClient = require("mongodb").MongoClient;
 mongoClient.connect("mongodb://localhost/maisfono")
-            .then(conn => global.conn = conn.db("fono"))
+            .then(conn => global.conn = conn.db("banco"))
             .catch(err => console.log(err))
 
 

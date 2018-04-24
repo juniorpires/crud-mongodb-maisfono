@@ -31,7 +31,7 @@
                   <td><%= paciente.telefone %></td>
                   <td><%= paciente.data_nascimento %></td>
                   <td><%= paciente.deficiencias %></td>
-                  <td><%= paciente.endereco.logradouro %></td>
+                  <td><%= paciente.endereco %></td>
                   <td> <a href="/edit/<%= paciente._id %>"><button type="button" class="btn btn-info">E</button> </a></td>
                   <td><a href="/delete/<%= paciente._id %>" 
                     onclick="return confirm('Tem certeza que deseja excluir?');"> <button type="button" class="btn btn-danger"> X </button> </a></td>
